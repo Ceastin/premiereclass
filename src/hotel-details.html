@@ -84,7 +84,7 @@
         .section-title { font-size: 22px; color: var(--pi-purple); margin-bottom: 16px; font-weight: 700; }
         .rate-warning { background: #fff3cd; color: #856404; padding: 12px 16px; border-radius: 4px; font-size: 14px; margin-bottom: 24px; border-left: 4px solid #ffeeba; }
 
-        .room-card { background: var(--bg-card); border: 2px solid transparent; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .room-card { background: var(--bg-card); border: 2px solid transparent; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: border-color 0.3s; }
         .room-card.selected { border-color: var(--pi-purple); }
         .room-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
         .room-header h3 { font-size: 20px; font-weight: 700; }
@@ -94,14 +94,14 @@
 
         /* Rate Rows */
         .rate-list { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-top: 16px; }
-        .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; background: var(--bg-card); }
+        .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; background: var(--bg-card); transition: background 0.2s; }
         .rate-row:last-child { border-bottom: none; }
         .rate-row:hover { background: var(--bg-body); }
         .rate-row.selected { background: #fdf5ff; border-left: 4px solid var(--pi-purple); }
         .rate-info h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .rate-info p { font-size: 13px; color: var(--text-muted); }
         .rate-price { font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .radio-btn { width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 50%; display: inline-block; position: relative; }
+        .radio-btn { width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 50%; display: inline-block; position: relative; transition: border-color 0.2s; }
         .rate-row.selected .radio-btn { border-color: var(--pi-purple); }
         .rate-row.selected .radio-btn::after { content: ''; width: 10px; height: 10px; background: var(--pi-purple); border-radius: 50%; position: absolute; top: 3px; left: 3px; }
 
@@ -114,7 +114,7 @@
         .summary-details p strong { font-weight: 600; }
         .summary-total { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
         .summary-total span { font-size: 14px; color: var(--text-muted); }
-        .summary-total strong { font-size: 32px; font-weight: 800; color: var(--text-main); line-height: 1; }
+        .summary-total strong { font-size: 32px; font-weight: 800; color: var(--text-main); line-height: 1; transition: color 0.3s; }
         .btn-book { display: block; width: 100%; background: var(--pi-green); color: white; text-align: center; padding: 16px; font-size: 18px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: 0.2s; }
         .btn-book:hover { background: #006659; }
 
@@ -316,15 +316,15 @@
                 <div class="summary-content">
                     <div class="summary-details">
                         <p><strong>Stay</strong> <span>1 night</span></p>
-                        <p><strong>Room</strong> <span>Standard Double</span></p>
-                        <p><strong>Rate</strong> <span>Flex</span></p>
+                        <p><strong>Room</strong> <span id="summary-room">Standard room</span></p>
+                        <p><strong>Rate</strong> <span id="summary-rate">Flex</span></p>
                     </div>
                     <div class="summary-total">
                         <div>
                             <span style="display:block; margin-bottom: 4px;">Total price</span>
                             <a href="#" style="font-size: 13px; color: var(--pi-purple); text-decoration: underline;">See breakdown</a>
                         </div>
-                        <strong>£144</strong>
+                        <strong id="summary-price">£144</strong>
                     </div>
                     <div style="margin-bottom: 16px;">
                         <input type="text" placeholder="Enter promo code" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
@@ -578,6 +578,54 @@
             <a href="#">Sitemap</a>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all clickable rate rows and main room cards
+            const rateRows = document.querySelectorAll('.rate-row');
+            const roomCards = document.querySelectorAll('.room-card');
+            
+            // Select the spans inside the summary panel that need updating
+            const summaryRoom = document.getElementById('summary-room');
+            const summaryRate = document.getElementById('summary-rate');
+            const summaryPrice = document.getElementById('summary-price');
+
+            // Add a click event to every rate row
+            rateRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    
+                    // 1. Remove the 'selected' styling from ALL rows and cards
+                    rateRows.forEach(r => r.classList.remove('selected'));
+                    roomCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // 2. Add the 'selected' styling to the row that was just clicked
+                    this.classList.add('selected');
+                    
+                    // 3. Find which Room Card this row belongs to and highlight the card border
+                    const parentCard = this.closest('.room-card');
+                    parentCard.classList.add('selected');
+
+                    // 4. Extract data from the HTML
+                    const roomName = parentCard.querySelector('h3').textContent.trim();
+                    const rateName = this.querySelector('h4').textContent.trim(); 
+                    const price = this.querySelector('.rate-price').textContent.trim();
+
+                    // 5. Update the text in the summary panel on the right
+                    summaryRoom.textContent = roomName;
+                    summaryRate.textContent = rateName;
+                    
+                    // Flash effect for the price so the user notices the change
+                    summaryPrice.style.color = 'var(--pi-purple)';
+                    summaryPrice.textContent = price;
+                    
+                    // Reset price color back to black after 300ms
+                    setTimeout(() => {
+                        summaryPrice.style.color = 'var(--text-main)';
+                    }, 300);
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
