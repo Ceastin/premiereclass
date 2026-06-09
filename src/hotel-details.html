@@ -579,7 +579,7 @@
             const hotelId = urlParams.get('hotelId') || 'default-birmingham';
             async function fetchPricingData(id) {
                 console.log(`Fetching prices for hotel ID: ${id}...`);
-                
+                console.log(urlParams.get('hotelId'));
                 const url = `https://back-d4wo.onrender.com/hotels/${id}/prices`;
                 console.log(url);
                 const maxRetries = 20;
