@@ -21,50 +21,43 @@
             --font-stack: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
+        /* --- SKELETON LOADING ANIMATION --- */
+        .price-loading { 
+            color: transparent !important; 
+            background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s infinite;
+            border-radius: 4px;
+            width: 50px;
+            height: 20px;
+            display: inline-block;
+            user-select: none;
+        }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font-stack); background: var(--bg-body); color: var(--text-main); line-height: 1.5; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
         /* Header Navigation */
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 40px;
-            height: 72px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        header { background-color: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 0 40px; height: 72px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .header-left, .header-right { display: flex; align-items: center; gap: 32px; }
         .logo { font-size: 24px; font-weight: 800; color: var(--pi-purple); }
         .nav-link { font-size: 15px; font-weight: 600; color: var(--text-main); }
         .nav-link:hover { color: var(--pi-purple); }
 
         /* Search Ribbon */
-        .search-ribbon {
-            background: var(--pi-purple);
-            color: white;
-            padding: 12px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
+        .search-ribbon { background: var(--pi-purple); color: white; padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
         .search-details { display: flex; gap: 24px; align-items: center; font-weight: 600; }
         .search-details span { display: flex; align-items: center; gap: 8px; }
         .btn-edit { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 16px; border-radius: 4px; font-weight: 600; cursor: pointer; }
 
         .container { max-width: 1140px; margin: 0 auto; padding: 24px 20px; }
 
-        /* Breadcrumbs */
+        /* Breadcrumbs & Hotel Header */
         .breadcrumbs { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
         .breadcrumbs a:hover { text-decoration: underline; color: var(--pi-purple); }
-
-        /* Hotel Header */
         .hotel-header { margin-bottom: 24px; }
         .hotel-title { font-size: 32px; color: var(--pi-purple); font-weight: 800; margin-bottom: 8px; }
         .hotel-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
@@ -101,6 +94,7 @@
         .rate-info h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .rate-info p { font-size: 13px; color: var(--text-muted); }
         .rate-price { font-size: 20px; font-weight: 800; color: var(--text-main); }
+        
         .radio-btn { width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 50%; display: inline-block; position: relative; transition: border-color 0.2s; }
         .rate-row.selected .radio-btn { border-color: var(--pi-purple); }
         .rate-row.selected .radio-btn::after { content: ''; width: 10px; height: 10px; background: var(--pi-purple); border-radius: 50%; position: absolute; top: 3px; left: 3px; }
@@ -182,7 +176,7 @@
 
     <div class="search-ribbon">
         <div class="search-details">
-            <span>📍 Birmingham City Centre (Exchange Square)</span>
+            <span id="header-hotel-name">📍 Birmingham City Centre (Exchange Square)</span>
             <span>📅 09 Jun - 10 Jun</span>
             <span>👥 1 adult, 1 room</span>
         </div>
@@ -235,7 +229,7 @@
 
                 <div class="room-card selected">
                     <div class="room-header">
-                        <h3>Standard room</h3>
+                        <h3 class="room-name-label">Standard room</h3>
                         <a href="#">See details</a>
                     </div>
                     <p class="room-desc">
@@ -245,24 +239,24 @@
                     <div class="rate-list">
                         <div class="rate-row selected">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Flex</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Flex</span></h4>
                                 <p>Pay now or on arrival. Fully refundable up to 1pm on day of arrival</p>
                             </div>
-                            <div class="rate-price">£144</div>
+                            <div class="rate-price price-loading" id="price-std-flex">£---</div>
                         </div>
                         <div class="rate-row">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Standard</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Standard</span></h4>
                                 <p>Pay now, non-refundable. Check-in date amendable before 1pm on day of arrival</p>
                             </div>
-                            <div class="rate-price">£134</div>
+                            <div class="rate-price price-loading" id="price-std-std">£---</div>
                         </div>
                         <div class="rate-row">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Non-Flex</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Non-Flex</span></h4>
                                 <p>Pay now. No changes</p>
                             </div>
-                            <div class="rate-price">£133</div>
+                            <div class="rate-price price-loading" id="price-std-nonflex">£---</div>
                         </div>
                     </div>
                 </div>
@@ -272,7 +266,7 @@
                         ⚠️ Only 1 room left for your search
                     </div>
                     <div class="room-header">
-                        <h3>Premier Plus room</h3>
+                        <h3 class="room-name-label">Premier Plus room</h3>
                         <a href="#">See details</a>
                     </div>
                     <p class="room-desc">
@@ -282,24 +276,24 @@
                     <div class="rate-list">
                         <div class="rate-row">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Flex</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Flex</span></h4>
                                 <p>Pay now or on arrival. Fully refundable up to 1pm on day of arrival</p>
                             </div>
-                            <div class="rate-price">£166</div>
+                            <div class="rate-price price-loading" id="price-prem-flex">£---</div>
                         </div>
                         <div class="rate-row">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Standard</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Standard</span></h4>
                                 <p>Pay now, non-refundable. Check-in date amendable before 1pm</p>
                             </div>
-                            <div class="rate-price">£156</div>
+                            <div class="rate-price price-loading" id="price-prem-std">£---</div>
                         </div>
                         <div class="rate-row">
                             <div class="rate-info">
-                                <h4><span class="radio-btn"></span> Non-Flex</h4>
+                                <h4><span class="radio-btn"></span> <span class="rate-type-label">Non-Flex</span></h4>
                                 <p>Pay now. No changes</p>
                             </div>
-                            <div class="rate-price">£155</div>
+                            <div class="rate-price price-loading" id="price-prem-nonflex">£---</div>
                         </div>
                     </div>
                 </div>
@@ -324,7 +318,7 @@
                             <span style="display:block; margin-bottom: 4px;">Total price</span>
                             <a href="#" style="font-size: 13px; color: var(--pi-purple); text-decoration: underline;">See breakdown</a>
                         </div>
-                        <strong id="summary-price">£144</strong>
+                        <strong id="summary-price" class="price-loading">£---</strong>
                     </div>
                     <div style="margin-bottom: 16px;">
                         <input type="text" placeholder="Enter promo code" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
@@ -581,51 +575,116 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Select all clickable rate rows and main room cards
+            // 1. Get the Hotel ID from the URL (e.g. hotel-details.html?hotelId=bhm-exchange)
+            const urlParams = new URLSearchParams(window.location.search);
+            const hotelId = urlParams.get('hotelId') || 'default-birmingham';
+
+            // 2. Fetch Pricing Function
+            async function fetchPricingData(id) {
+                try {
+                    console.log(`Fetching prices for hotel ID: ${id}...`);
+                    
+                    /* // -------------------------------------------------------------
+                    // REAL BACKEND CALL (Uncomment and replace URL when API is ready)
+                    // -------------------------------------------------------------
+                    const response = await fetch(`https://api.yourdomain.com/hotels/${id}/prices`);
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return await response.json();
+                    */
+
+                    // -------------------------------------------------------------
+                    // MOCK BACKEND SIMULATION (Simulates a 1.5s network delay)
+                    // -------------------------------------------------------------
+                    return new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve({
+                                standard: { flex: "£144", standard: "£134", nonFlex: "£133" },
+                                premier: { flex: "£166", standard: "£156", nonFlex: "£155" }
+                            });
+                        }, 1500); 
+                    });
+
+                } catch (error) {
+                    console.error("Failed to fetch pricing:", error);
+                    return {
+                        standard: { flex: "N/A", standard: "N/A", nonFlex: "N/A" },
+                        premier: { flex: "N/A", standard: "N/A", nonFlex: "N/A" }
+                    };
+                }
+            }
+
+            // 3. Inject Data into HTML
+            function injectPricing(data) {
+                const priceElements = {
+                    'price-std-flex': data.standard.flex,
+                    'price-std-std': data.standard.standard,
+                    'price-std-nonflex': data.standard.nonFlex,
+                    'price-prem-flex': data.premier.flex,
+                    'price-prem-std': data.premier.standard,
+                    'price-prem-nonflex': data.premier.nonFlex
+                };
+
+                // Inject values and remove the skeleton loading animation
+                for (const [id, value] of Object.entries(priceElements)) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.textContent = value;
+                        el.classList.remove('price-loading'); 
+                    }
+                }
+
+                // Immediately update the Summary Panel
+                updateSummaryPanel();
+            }
+
+            // 4. Update the Summary Panel based on user selection
+            function updateSummaryPanel() {
+                const activeRow = document.querySelector('.rate-row.selected');
+                if (!activeRow) return;
+
+                const parentCard = activeRow.closest('.room-card');
+                
+                const roomName = parentCard.querySelector('.room-name-label').textContent.trim();
+                const rateName = activeRow.querySelector('.rate-type-label').textContent.trim(); 
+                const price = activeRow.querySelector('.rate-price').textContent.trim();
+
+                document.getElementById('summary-room').textContent = roomName;
+                document.getElementById('summary-rate').textContent = rateName;
+                
+                const summaryPriceEl = document.getElementById('summary-price');
+                summaryPriceEl.textContent = price;
+                summaryPriceEl.classList.remove('price-loading'); 
+
+                // Visual flash effect on price change
+                summaryPriceEl.style.color = 'var(--pi-purple)';
+                setTimeout(() => { summaryPriceEl.style.color = 'var(--text-main)'; }, 300);
+            }
+
+            // 5. Setup Click Event Listeners
             const rateRows = document.querySelectorAll('.rate-row');
             const roomCards = document.querySelectorAll('.room-card');
-            
-            // Select the spans inside the summary panel that need updating
-            const summaryRoom = document.getElementById('summary-room');
-            const summaryRate = document.getElementById('summary-rate');
-            const summaryPrice = document.getElementById('summary-price');
 
-            // Add a click event to every rate row
             rateRows.forEach(row => {
                 row.addEventListener('click', function() {
-                    
-                    // 1. Remove the 'selected' styling from ALL rows and cards
+                    // Clear old selections
                     rateRows.forEach(r => r.classList.remove('selected'));
                     roomCards.forEach(c => c.classList.remove('selected'));
                     
-                    // 2. Add the 'selected' styling to the row that was just clicked
+                    // Set new selection
                     this.classList.add('selected');
-                    
-                    // 3. Find which Room Card this row belongs to and highlight the card border
-                    const parentCard = this.closest('.room-card');
-                    parentCard.classList.add('selected');
+                    this.closest('.room-card').classList.add('selected');
 
-                    // 4. Extract data from the HTML
-                    const roomName = parentCard.querySelector('h3').textContent.trim();
-                    const rateName = this.querySelector('h4').textContent.trim(); 
-                    const price = this.querySelector('.rate-price').textContent.trim();
-
-                    // 5. Update the text in the summary panel on the right
-                    summaryRoom.textContent = roomName;
-                    summaryRate.textContent = rateName;
-                    
-                    // Flash effect for the price so the user notices the change
-                    summaryPrice.style.color = 'var(--pi-purple)';
-                    summaryPrice.textContent = price;
-                    
-                    // Reset price color back to black after 300ms
-                    setTimeout(() => {
-                        summaryPrice.style.color = 'var(--text-main)';
-                    }, 300);
+                    // Update the sticky sidebar
+                    updateSummaryPanel();
                 });
             });
+
+            // 6. Execute the fetch on page load
+            fetchPricingData(hotelId).then(data => {
+                injectPricing(data);
+            });
+
         });
     </script>
-
 </body>
 </html>
