@@ -581,13 +581,14 @@
                 console.log(`Fetching prices for hotel ID: ${id}...`);
                 console.log(urlParams.get('hotelId'));
                 const url = `https://back-d4wo.onrender.com/hotels/${id}/prices`;
-                console.log(url);
+                
                 const maxRetries = 20;
-                const delayMs = 3000;  
+                const delayMs = 3000;
 
                 for (let attempt = 1; attempt <= maxRetries; attempt++) {
                     try {
                         const response = await fetch(url);
+                        
                         if (response.ok) {
                             console.log(`✅ Success on attempt ${attempt}!`);
                             return await response.json();
@@ -603,7 +604,6 @@
                     }
                 }
 
-                // If the loop finishes and it STILL hasn't connected, fallback to "N/A"
                 console.error("❌ Failed to fetch pricing after maximum retries.");
                 return {
                     standard: { flex: "N/A", standard: "N/A", nonFlex: "N/A" },
