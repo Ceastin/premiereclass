@@ -578,63 +578,56 @@
             const urlParams = new URLSearchParams(window.location.search);
         const hotelId = urlParams.get('hotelId') || 'default-birmingham';
 
-        async function fetchPricingData(id) {
-    console.log(`Fetching pricing from Logik for hotel: ${id}`);
+        function injectPricing(data) {
+    const allPriceField = data?.fields?.find(
+        field => field.variableName === "allPrice"
+    );
 
-    const url = 'https://impactrongloballtddemo01.demo01.logik.io/api';
-
-    const requestBody = {
-        sessionContext: { stateful: true },
-        partnerData: {
-            product: {
-                configuredProductId: '81a7497a2bdd8b10bb1efba6ce91bf0f'
-            }
-        },
-        fields: [
-            { variableName: 'roomType', value: 'Suite' },
-            { variableName: 'hotel_name', value: 'Whitbread London' }
-        ]
-    };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer GQCJfvwt3eeyc_sdXmbhNtbyR3Mc9kSi0Q'
-        },
-        body: JSON.stringify(requestBody)
-    });
-
-    const text = await response.text();
-    console.log('Status:', response.status);
-    console.log('Response text:', text);
-
-    if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+    if (!allPriceField || !allPriceField.value) {
+        console.error("allPrice field not found");
+        return;
     }
 
-    return JSON.parse(text);
+    const pricingMap = {};
+
+    allPriceField.value.split(",").forEach(item => {
+        const [room, rate, price] = item.split("|").map(part => part.trim());
+        if (room && rate && price) {
+            pricingMap[`${room}-${rate}`] = price;
+        }
+    });
+
+    const priceElements = {
+        "price-std-flex": `£${pricingMap["Standard-Flex"] || "N/A"}`,
+        "price-std-std": `£${pricingMap["Standard-Standard"] || "N/A"}`,
+        "price-std-nonflex": `£${pricingMap["Standard-Non-Flex"] || "N/A"}`,
+        "price-prem-flex": `£${pricingMap["Premier Plus Room-Flex"] || "N/A"}`,
+        "price-prem-std": `£${pricingMap["Premier Plus Room-Standard"] || "N/A"}`,
+        "price-prem-nonflex": `£${pricingMap["Premier Plus Room-Non-Flex"] || "N/A"}`
+    };
+
+    for (const [id, value] of Object.entries(priceElements)) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.textContent = value;
+            el.classList.remove("price-loading");
+        }
+    }
+
+    updateSummaryPanel();
 }
 
             function injectPricing(data) {
-                let price = null;
+                const allPriceField = data.fields.find(
+    field => field.variableName === "allPrice"
+);
 
-                if (data?.fields) {
-                    const priceField = data.fields.find(
-                        field => field.variableName === "price"
-                    );
+if (!allPriceField) {
+    console.error("allPrice field not found");
+    return;
+}
 
-                    if (priceField) {
-                        price = priceField.value;
-                    }
-                }
-
-                if (price === null || price === undefined) {
-                    price = data?.price ?? "N/A";
-                }
-
-                const displayPrice =
-                    price === "N/A" ? "N/A" : `£${price}`;
+                
 
                 const priceElements = {
                     "price-std-flex": displayPrice,
