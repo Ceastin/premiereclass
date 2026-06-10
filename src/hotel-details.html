@@ -576,61 +576,85 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const hotelId = urlParams.get('hotelId') || 'default-birmingham';
-            async function fetchPricingData(id) {
-                console.log(`Fetching prices for hotel ID: ${id}...`);
-                console.log(urlParams.get('hotelId'));
-                const url = `https://back-d4wo.onrender.com/hotels/${id}/prices`;
-                
-                const maxRetries = 20;
-                const delayMs = 3000;
+        const hotelId = urlParams.get('hotelId') || 'default-birmingham';
 
-                for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                    try {
-                        const response = await fetch(url);
-                        
-                        if (response.ok) {
-                            console.log(`✅ Success on attempt ${attempt}!`);
-                            return await response.json();
-                        } else {
-                            console.warn(`⚠️ Attempt ${attempt} failed (Status: ${response.status}). Server might be waking up...`);
-                        }
-                    } catch (error) {
-                        console.warn(`⚠️ Attempt ${attempt} encountered an error: ${error.message}. Server is likely spinning up...`);
-                    }
-                    
-                    if (attempt < maxRetries) {
-                        await new Promise(resolve => setTimeout(resolve, delayMs));
-                    }
-                }
+        async function fetchPricingData(id) {
+    console.log(`Fetching pricing from Logik for hotel: ${id}`);
 
-                console.error("❌ Failed to fetch pricing after maximum retries.");
-                return {
-                    standard: { flex: "N/A", standard: "N/A", nonFlex: "N/A" },
-                    premier: { flex: "N/A", standard: "N/A", nonFlex: "N/A" }
-                };
+    const url = 'https://impactrongloballtddemo01.demo01.logik.io/api';
+
+    const requestBody = {
+        sessionContext: { stateful: true },
+        partnerData: {
+            product: {
+                configuredProductId: '81a7497a2bdd8b10bb1efba6ce91bf0f'
             }
+        },
+        fields: [
+            { variableName: 'roomType', value: 'Suite' },
+            { variableName: 'hotel_name', value: 'Whitbread London' }
+        ]
+    };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer GQCJfvwt3eeyc_sdXmbhNtbyR3Mc9kSi0Q'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    const text = await response.text();
+    console.log('Status:', response.status);
+    console.log('Response text:', text);
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+
+    return JSON.parse(text);
+}
 
             function injectPricing(data) {
-                const priceElements = {
-                    'price-std-flex': data.standard.flex,
-                    'price-std-std': data.standard.standard,
-                    'price-std-nonflex': data.standard.nonFlex,
-                    'price-prem-flex': data.premier.flex,
-                    'price-prem-std': data.premier.standard,
-                    'price-prem-nonflex': data.premier.nonFlex
-                };
+                let price = null;
 
-                // Inject values and remove the skeleton loading animation
-                for (const [id, value] of Object.entries(priceElements)) {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.textContent = value;
-                        el.classList.remove('price-loading'); 
+                if (data?.fields) {
+                    const priceField = data.fields.find(
+                        field => field.variableName === "price"
+                    );
+
+                    if (priceField) {
+                        price = priceField.value;
                     }
                 }
 
-                // Immediately update the Summary Panel
+                if (price === null || price === undefined) {
+                    price = data?.price ?? "N/A";
+                }
+
+                const displayPrice =
+                    price === "N/A" ? "N/A" : `£${price}`;
+
+                const priceElements = {
+                    "price-std-flex": displayPrice,
+                    "price-std-std": displayPrice,
+                    "price-std-nonflex": displayPrice,
+                    "price-prem-flex": displayPrice,
+                    "price-prem-std": displayPrice,
+                    "price-prem-nonflex": displayPrice
+                };
+
+                for (const [id, value] of Object.entries(priceElements)) {
+
+                    const el = document.getElementById(id);
+
+                    if (el) {
+                        el.textContent = value;
+                        el.classList.remove("price-loading");
+                    }
+                }
+
                 updateSummaryPanel();
             }
 
@@ -667,7 +691,6 @@
                     rateRows.forEach(r => r.classList.remove('selected'));
                     roomCards.forEach(c => c.classList.remove('selected'));
                     
-                    // Set new selection
                     this.classList.add('selected');
                     this.closest('.room-card').classList.add('selected');
 
