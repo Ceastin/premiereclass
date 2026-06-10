@@ -578,10 +578,47 @@
             const urlParams = new URLSearchParams(window.location.search);
         const hotelId = urlParams.get('hotelId') || 'default-birmingham';
 
-        function injectPricing(data) {
-    const allPriceField = data?.fields?.find(
-        field => field.variableName === "allPrice"
-    );
+        async function fetchPricingData(id) {
+    console.log(`Fetching pricing from Logik for hotel: ${id}`);
+
+    const url = 'https://impactrongloballtddemo01.demo01.logik.io/api';
+
+    const requestBody = {
+        sessionContext: { stateful: true },
+        partnerData: {
+            product: {
+                configuredProductId: '81a7497a2bdd8b10bb1efba6ce91bf0f'
+            }
+        },
+        fields: [
+            { variableName: 'hotel_name', value: 'Whitbread London' }
+        ]
+    };
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer GQCJfvwt3eeyc_sdXmbhNtbyR3Mc9kSi0Q'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    const text = await response.text();
+    console.log('Status:', response.status);
+    console.log('Response text:', text);
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+
+    return JSON.parse(text);
+}
+
+            function injectPricing(data) {
+            const allPriceField = data?.fields?.find(
+            field => field.variableName === "allPrice"
+            );
 
     if (!allPriceField || !allPriceField.value) {
         console.error("allPrice field not found");
@@ -616,40 +653,6 @@
 
     updateSummaryPanel();
 }
-
-            function injectPricing(data) {
-                const allPriceField = data.fields.find(
-    field => field.variableName === "allPrice"
-);
-
-if (!allPriceField) {
-    console.error("allPrice field not found");
-    return;
-}
-
-                
-
-                const priceElements = {
-                    "price-std-flex": displayPrice,
-                    "price-std-std": displayPrice,
-                    "price-std-nonflex": displayPrice,
-                    "price-prem-flex": displayPrice,
-                    "price-prem-std": displayPrice,
-                    "price-prem-nonflex": displayPrice
-                };
-
-                for (const [id, value] of Object.entries(priceElements)) {
-
-                    const el = document.getElementById(id);
-
-                    if (el) {
-                        el.textContent = value;
-                        el.classList.remove("price-loading");
-                    }
-                }
-
-                updateSummaryPanel();
-            }
 
             // 4. Update the Summary Panel based on user selection
             function updateSummaryPanel() {
