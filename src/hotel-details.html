@@ -176,7 +176,7 @@
 
     <div class="search-ribbon">
         <div class="search-details">
-            <span id="header-hotel-name">📍 Birmingham City Centre (Exchange Square)</span>
+            <span id="header-hotel-name"></span>
             <span>📅 09 Jun - 10 Jun</span>
             <span>👥 1 adult, 1 room</span>
         </div>
@@ -190,11 +190,11 @@
             <a href="#">England</a> / 
             <a href="#">West Midlands</a> / 
             <a href="#">Birmingham</a> / 
-            <span style="color: var(--text-main); font-weight: 500;">Birmingham City Centre Exchange Square</span>
+            <span id="header-hotel-name-1" style="color: var(--text-main); font-weight: 500;"></span>
         </div>
 
         <div class="hotel-header">
-            <h1 class="hotel-title">Birmingham City Centre (Exchange Square) hotel</h1>
+            <h1 class="hotel-title" id="header-hotel-name-2"></h1>
             <div class="hotel-meta">
                 <div class="ta-bubbles">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
@@ -582,6 +582,9 @@
         hotelId=hotelId.replaceAll("|","-");
         hotelId=hotelId.replaceAll(",",")");
         console.log(hotelId);
+        document.getElementById('header-hotel-name').textContent = hotelId;
+        document.getElementById('header-hotel-name-1').textContent = hotelId;
+        document.getElementById('header-hotel-name-2').textContent = hotelId;
         async function fetchPricingData(id) {
         console.log(`Fetching pricing from Logik for hotel: ${hotelId}`);
 
