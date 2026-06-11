@@ -578,9 +578,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         var hotelId = urlParams.get('hotelId') || 'default-birmingham';
         hotelId=hotelId.replaceAll("-"," ");
+        hotelId=hotelId.replaceAll("_","(");
+        hotelId=hotelId.replaceAll("|","-");
+        hotelId=hotelId.replaceAll(",",")");
         console.log(hotelId);
         async function fetchPricingData(id) {
-    console.log(`Fetching pricing from Logik for hotel: ${hotelId}`);
+        console.log(`Fetching pricing from Logik for hotel: ${hotelId}`);
 
     const url = 'https://impactrongloballtddemo01.demo01.logik.io/api';
 
