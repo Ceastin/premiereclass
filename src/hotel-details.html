@@ -649,16 +649,9 @@
     else console.log(allPriceField.value);
 
     const pricingMap = {};
-    allPriceField.forEach(item=>{
-        if(item.roomCategory==='Standard')
-        {
-            pricingMap[`${item.roomCategory}-${item.rateType}`]=item.finalPrice;
-        }
-        else
-        {
-            pricingMap[`${item.roomCategory}-${item.rateType}`]=item.finalPrice;
-        }
-    });
+    allPriceField.forEach(item => {
+    pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
+});
 
     const priceElements = {
         "price-std-flex": `£${pricingMap["Standard-Flex"] || "N/A"}`,
