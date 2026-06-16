@@ -649,11 +649,14 @@
     else console.log(allPriceField.value);
 
     const pricingMap = {};
-
-    allPriceField.value.split(",").forEach(item => {
-        const [room, rate, price] = item.split("|").map(part => part.trim());
-        if (room && rate && price) {
-            pricingMap[`${room}-${rate}`] = price;
+    allPriceField.forEach(item=>{
+        if(item.roomCategory==='Standard')
+        {
+            pricingMap[`${item.roomCategory}-${item.rateType}`]=item.finalPrice;
+        }
+        else
+        {
+            pricingMap[`${item.roomCategory}-${item.rateType}`]=item.finalPrice;
         }
     });
 
