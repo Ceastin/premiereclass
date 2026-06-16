@@ -6,6 +6,19 @@
     <title>Premier Inn Birmingham City Centre (Exchange Square) hotel</title>
     <style>
         /* Core Variables */
+        .logo {
+            display: flex;
+            align-items: center;
+            background: var(--pi-purple);
+            border-radius: 25px;
+        }
+
+        .logo img {
+            display: block;
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
         :root {
             --pi-purple: #4B0053;
             --pi-purple-hover: #63006E;
@@ -163,7 +176,9 @@
 
     <header>
         <div class="header-left">
-            <div class="logo">Premier Inn</div>
+            <div class="logo">
+                <img src="newPILogo.png"  />
+            </div>
             <a href="#" class="nav-link">Discover Premier Inn</a>
             <a href="#" class="nav-link">Business</a>
         </div>

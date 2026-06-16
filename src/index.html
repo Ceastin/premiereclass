@@ -60,11 +60,17 @@
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--pi-purple);
-            letter-spacing: -0.5px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background: var(--pi-purple);
+            border-radius: 25px;
+        }
+
+        .logo img {
+            display: block;
+            height: 48px;
+            width: auto;
+            object-fit: contain;
         }
 
         .nav-link {
@@ -535,9 +541,11 @@
 
     <header>
         <div class="header-left">
-            <div class="logo">Premier Inn</div>
-            <a href="#" class="nav-link">Discover Premier Inn</a>
-            <a href="#" class="nav-link">Business</a>
+        <div class="logo">
+            <img src="newPILogo.png"  />
+        </div>
+        <a href="#" class="nav-link">Discover Premier Inn</a>
+        <a href="#" class="nav-link">Business</a>
         </div>
         <div class="header-right">
             <a href="#" class="nav-link">Manage booking</a>
