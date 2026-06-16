@@ -648,9 +648,13 @@
     }
     else console.log(allPriceField.value);
 
-    const pricingMap = {};
-    allPriceField.forEach(item => {
-    pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
+   const pricingMap = {};
+
+const prices = JSON.parse(allPriceField.value);
+
+prices.forEach(item => {
+    pricingMap[`${item.roomCategory}-${item.rateType}`] =
+        item.finalPrice;
 });
 
     const priceElements = {
