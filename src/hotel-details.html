@@ -783,7 +783,7 @@
 
                 const pricingMap = {};
                 const prices = JSON.parse(allPriceField.value);
-                console.log(prices);
+                console.log(allPriceField);
                 prices.forEach(item => {
                     pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
                 });
