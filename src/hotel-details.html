@@ -649,21 +649,25 @@
             
             <div style="display: flex; flex-direction: column; gap: 8px;">
                 <label for="hotel_name" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Hotel Name</label>
-                <input type="text" id="hotel_name" name="hotel_name" value="Birmingham City - Aston" 
-                       style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
+                <input type="text" id="hotel_name" name="hotel_name" readonly 
+                       style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px; background-color: #b2adad; ">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label for="hotelLocation" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Hotel Location</label>
+                    <select id="hotelLocation" name="hotelLocation" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; background-color: #b2adad; font-size: 15px;">
+                        <option value="UK" selected>UK</option>
+                    </select>
+                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <label for="hotelLocation" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Hotel Location</label>
-                    <select id="hotelLocation" name="hotelLocation" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; background: var(--bg-card); font-size: 15px;">
-                        <option value="UK" selected>UK</option>
-                        <option value="Germany">Germany</option>
-                    </select>
-                </div>
 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <label for="date" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Date</label>
+                    <label for="date" style="font-weight: 600; font-size: 14px; color: var(--text-main);">From</label>
+                    <input type="date" id="date-1" name="date" 
+                        style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label for="date" style="font-weight: 600; font-size: 14px; color: var(--text-main);">To</label>
                     <input type="date" id="date-1" name="date" 
                         style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
                 </div>
@@ -708,6 +712,7 @@
             if (adminToggleBtn) {
                 adminToggleBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    document.getElementById('hotel_name').value=hotelId;
                     document.body.classList.toggle('split-active');
                 });
             }
@@ -849,7 +854,6 @@
                     updateSummaryPanel();
                 });
             });
-
             // -- ADMIN SIMULATION SUBMIT LOGIC -- //
             const adminSubmitBtn = document.getElementById('admin-submit-btn');
             if (adminSubmitBtn) {
@@ -885,8 +889,8 @@
 
                     // 4. Construct the new dynamic fields array
                     const simulationFields = [
-                        { variableName: 'hotel_name', value: simHotelName },
-                        { variableName: 'hotelLocation', value: simHotelLocation },
+                        { variableName: 'hotel_name', value: hotelId },
+                        { variableName: 'hotelLocation', value: 'UK' },
                         { variableName: 'corporate', value: simCorporate },
                         { variableName: 'weatherCondition', value: simWeather },
                         { variableName: 'eventType', value: simEvent }
