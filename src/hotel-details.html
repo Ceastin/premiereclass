@@ -242,7 +242,7 @@
         <div class="search-ribbon">
             <div class="search-details">
                 <span id="header-hotel-name"></span>
-                <span>📅 09 Jun - 10 Jun</span>
+                <span id="date-field">📅 21 Jun</span>
                 <span>👥 1 adult, 1 room</span>
             </div>
             <button class="btn-edit">Edit search</button>
@@ -664,7 +664,7 @@
 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label for="date" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Date</label>
-                    <input type="date" id="date" name="date" 
+                    <input type="date" id="date-1" name="date" 
                         style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
                 </div>
             </div>
@@ -874,6 +874,7 @@
                     const simWeather = document.getElementById('weatherCondition').value;
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
+                    const simDate=document.getElementById('date-1').value;
                     console.log(simOccupancy);
                     // 3. Update the left view headers
                     updateHotelHeaders(simHotelName);
@@ -898,6 +899,7 @@
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
                         injectPricing(data);
+                        document.getElementById("date-field").value=`📅 ${simDate}`;
                         console.log(simulationFields);
                         console.log(data);
                     }).catch(err => {
