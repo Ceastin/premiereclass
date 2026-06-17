@@ -875,6 +875,7 @@
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
                     const simDate=document.getElementById('date-1').value;
+                    console.log(simDate);
                     console.log(simOccupancy);
                     // 3. Update the left view headers
                     updateHotelHeaders(simHotelName);
@@ -899,7 +900,7 @@
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
                         injectPricing(data);
-                        document.getElementById("date-field").value=`📅 ${simDate}`;
+                        document.getElementById("date-field").value=simDate;
                         console.log(simulationFields);
                         console.log(data);
                     }).catch(err => {
