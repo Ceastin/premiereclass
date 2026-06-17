@@ -783,7 +783,7 @@
 
                 const pricingMap = {};
                 const prices = JSON.parse(allPriceField.value);
-
+                console.log(prices);
                 prices.forEach(item => {
                     pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
                 });
@@ -909,12 +909,7 @@
 
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
-                        const div = document.getElementById("response-body");
-
-                        div.textContent = data;
-                        div.style.backgroundColor = "#f0f0f0";
-                        div.style.padding = "10px";
-                        div.style.border = "1px solid #ccc";
+                        
                         injectPricing(data);
                         
                         console.log(simulationFields);
