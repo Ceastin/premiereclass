@@ -874,7 +874,7 @@
                     const simWeather = document.getElementById('weatherCondition').value;
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
-
+                    console.log(simOccupancy);
                     // 3. Update the left view headers
                     updateHotelHeaders(simHotelName);
 
@@ -898,6 +898,8 @@
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
                         injectPricing(data);
+                        console.log(simulationFields);
+                        console.log(data);
                     }).catch(err => {
                         console.error("Simulation API Error:", err);
                     });
