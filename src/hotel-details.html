@@ -813,7 +813,7 @@
                 const day = dateObj.getDate();
                 const month = dateObj.toLocaleString("en-US", { month: "long" }); // Use "short" for "Oct"
                 
-                return ${day} ${month};
+                return `${day} ${month}`;
                 }
             // -- UI UPDATE LOGIC -- //
             function updateSummaryPanel() {
@@ -884,7 +884,7 @@
                     const simWeather = document.getElementById('weatherCondition').value;
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
-                    const simDate=convertToDdMonth(document.getElementById('date-1').toISOString());
+                    const simDate=convertToDdMonth(document.getElementById('date-1').value.toISOString());
                     console.log(simDate);
                     console.log(simOccupancy);
                     
