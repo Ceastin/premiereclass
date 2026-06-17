@@ -663,9 +663,9 @@
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <label for="occupancy" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Occupancy (%)</label>
-                    <input type="number" id="occupancy" name="occupancy" min="1" max="100" placeholder="e.g. 85" 
-                           style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
+                    <label for="date" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Date</label>
+                    <input type="date" id="date" name="date" 
+                        style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 15px;">
                 </div>
             </div>
 
@@ -799,7 +799,12 @@
 
                 updateSummaryPanel();
             }
-
+            // -- Random Number Logic-- //
+            function getRandomNumber(min,max){
+                min=Math.ceil(min);
+                max=Math.floor(max);
+                return Math.floor(Math.random()*(max-min+1))+min;
+            }
             // -- UI UPDATE LOGIC -- //
             function updateSummaryPanel() {
                 const activeRow = document.querySelector('.rate-row.selected');
@@ -865,7 +870,7 @@
                     // 2. Grab values from the Admin Form
                     const simHotelName = document.getElementById('hotel_name').value;
                     const simHotelLocation = document.getElementById('hotelLocation').value;
-                    const simOccupancy = document.getElementById('occupancy').value;
+                    const simOccupancy = getRandomNumber(1,100);
                     const simWeather = document.getElementById('weatherCondition').value;
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
