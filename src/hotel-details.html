@@ -805,6 +805,16 @@
                 max=Math.floor(max);
                 return Math.floor(Math.random()*(max-min+1))+min;
             }
+            //-- date to string --//
+            function convertToDdMonth(dateString) {
+                // Use a split array or add time to prevent local timezone shifting issues
+                const dateObj = new Date(dateString + "T00:00:00"); 
+                
+                const day = dateObj.getDate();
+                const month = dateObj.toLocaleString("en-US", { month: "long" }); // Use "short" for "Oct"
+                
+                return ${day} ${month};
+                }
             // -- UI UPDATE LOGIC -- //
             function updateSummaryPanel() {
                 const activeRow = document.querySelector('.rate-row.selected');
@@ -874,9 +884,10 @@
                     const simWeather = document.getElementById('weatherCondition').value;
                     const simEvent = document.getElementById('eventType').value;
                     const simCorporate = document.getElementById('corporate').checked;
-                    const simDate=document.getElementById('date-1').value;
+                    const simDate=convertToDdMonth(document.getElementById('date-1').toISOString());
                     console.log(simDate);
                     console.log(simOccupancy);
+                    
                     // 3. Update the left view headers
                     updateHotelHeaders(simHotelName);
 
