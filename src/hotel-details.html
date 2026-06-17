@@ -783,7 +783,7 @@
 
                 const pricingMap = {};
                 const prices = JSON.parse(allPriceField.value);
-                console.log(allPriceField);
+
                 prices.forEach(item => {
                     pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
                 });
@@ -912,7 +912,6 @@
                         
                         injectPricing(data);
                         
-                        console.log(simulationFields);
                         console.log(data);
                     }).catch(err => {
                         console.error("Simulation API Error:", err);
