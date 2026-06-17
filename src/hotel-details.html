@@ -910,7 +910,7 @@
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
                         injectPricing(data);
-                        document.getElementById("date-field").value=simDate;
+                        document.getElementById('response-body').value=data;
                         console.log(simulationFields);
                         console.log(data);
                     }).catch(err => {
