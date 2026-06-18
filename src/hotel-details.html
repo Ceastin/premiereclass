@@ -767,7 +767,7 @@
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
-
+                console.log(text);
                 return JSON.parse(text);
             }
 
