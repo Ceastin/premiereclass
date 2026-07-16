@@ -677,10 +677,11 @@
             <div style="display: flex; flex-direction: column; gap: 8px;">
                 <label for="weatherCondition" style="font-weight: 600; font-size: 14px; color: var(--text-main);">Weather Forecast</label>
                 <select id="weatherCondition" name="weatherCondition" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; background: var(--bg-card); font-size: 15px;">
-                    <option value="Overcast">Overcast (Multiplier: x1.00)</option>
-                    <option value="Sunny" selected>Sunny - Leisure Premium (Multiplier: x1.12)</option>
-                    <option value="Poor / Rain">Poor / Rain - Bundle Offer (Multiplier: x0.95)</option>
-                    <option value="Severe">Severe - Travel Disruption (Multiplier: x0.93)</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Sunny Weekend" selected>Sunny Weekend</option>
+                    <option value="Heavy Rain">Heavy Rain</option>
+                    <option value="Snow">Snow</option>
+                    <option value="Heatwave">Heatwave</option>
                 </select>
             </div>
 
@@ -689,7 +690,7 @@
                 <select id="eventType" name="eventType" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; background: var(--bg-card); font-size: 15px;">
                     <option value="No Local Event" selected>No Local Event (Multiplier: x1.00)</option>
                     <option value="Local Event">Local Event (Multiplier: x1.10)</option>
-                    <option value="Major Event">Major Event (Multiplier: x1.18)</option>
+                    <option value="Major Event">Major Event (Multisplier: x1.18)</option>
                     <option value="Stadium / Wembely Event">Stadium / Wembley Event (Multiplier: x1.25)</option>
                 </select>
             </div>
