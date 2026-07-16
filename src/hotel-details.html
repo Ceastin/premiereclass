@@ -325,7 +325,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="room-card">
                         <div class="alert-text">
                             ⚠️ Only 1 room left for your search
@@ -723,9 +723,8 @@
             // -- INITIALIZATION LOGIC -- //
             const urlParams = new URLSearchParams(window.location.search);
             let hotelId = urlParams.get('hotelId') || 'default-birmingham';
-            hotelId = hotelId.replaceAll("-", " ")
-                             .replaceAll("_", "(")
-                             .replaceAll("|", "-")
+            hotelId = hotelId.replaceAll("_", " ")
+                             .replaceAll("-", "(")
                              .replaceAll(",", ")");
             
             // Helper to update the hotel names in the left view
