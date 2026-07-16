@@ -325,8 +325,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="room-card">
+                     
+                    <div class="room-card" id="premierRooms">
                         <div class="alert-text">
                             ⚠️ Only 1 room left for your search
                         </div>
@@ -362,6 +362,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">* Some rooms have showers only at this hotel</p>
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">* For energy efficiency reasons, the bedroom windows do not open. Rooms are fitted with air conditioning.</p>
@@ -795,7 +796,11 @@
                     "price-prem-std": `£${pricingMap["Premier Plus Room-Standard"] || "---"}`,
                     "price-prem-nonflex": `£${pricingMap["Premier Plus Room-Non-Flex"] || "---"}`
                 };
-
+                if(priceElements[price-prem-flex]==="---")
+                {
+                    let container=document.getElementById("premierRooms");
+                    container.innerHTML="";
+                }
                 for (const [id, value] of Object.entries(priceElements)) {
                     const el = document.getElementById(id);
                     if (el) {
