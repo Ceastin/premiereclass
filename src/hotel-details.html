@@ -726,7 +726,7 @@
             hotelId = hotelId.replaceAll("_", " ")
                              .replaceAll("-", "(")
                              .replaceAll(",", ")");
-            
+            console.log(hotelId);
             // Helper to update the hotel names in the left view
             const updateHotelHeaders = (name) => {
                 document.getElementById('header-hotel-name').textContent = name;
