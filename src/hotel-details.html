@@ -796,10 +796,10 @@
                     "price-prem-std": `£${pricingMap["Premier Plus Room-Standard"] || "---"}`,
                     "price-prem-nonflex": `£${pricingMap["Premier Plus Room-Non-Flex"] || "---"}`
                 };
-                if(priceElements["price-prem-flex"]=="---")
-                {
-                    let container=document.getElementById("premierRooms");
-                    container.innerHTML="";
+                const premierRoom = document.getElementById("premierRooms");
+
+                if (priceElements["price-prem-flex"] === "£---" && premierRoom) {
+                    premierRoom.remove();
                 }
                 for (const [id, value] of Object.entries(priceElements)) {
                     const el = document.getElementById(id);
