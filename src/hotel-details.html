@@ -725,10 +725,12 @@
             // -- INITIALIZATION LOGIC -- //
             const urlParams = new URLSearchParams(window.location.search);
             let hotelId = urlParams.get('hotelId') || 'default-birmingham';
+            let loc=urlParams.get('loc');
             hotelId = hotelId.replaceAll("_", " ")
                              .replaceAll("-", "(")
                              .replaceAll(",", ")");
             console.log(hotelId);
+            console.log(loc);
             // Helper to update the hotel names in the left view
             const updateHotelHeaders = (name) => {
                 document.getElementById('header-hotel-name').textContent = name;
