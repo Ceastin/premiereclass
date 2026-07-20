@@ -908,7 +908,9 @@
 
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
-                        
+                        console.log(simulationFields);
+                        console.log("------------");
+                        console.log(data);
                         injectPricing(data);
                         
                         console.log(data);
