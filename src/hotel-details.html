@@ -904,12 +904,7 @@
                     ];
 
                     // Only attach occupancy if the user provided a value
-                    if (simOccupancy) {
-                        simulationFields.push({ 
-                            variableName: 'occupancy', 
-                            value: parseInt(simOccupancy, 10) 
-                        });
-                    }
+                    
 
                     // 5. Fetch updated data
                     fetchPricingData(simulationFields).then(data => {
