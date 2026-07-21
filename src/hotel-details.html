@@ -788,7 +788,7 @@
                 const prices = JSON.parse(allPriceField.value);
 
                 prices.forEach(item => {
-                    pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalPrice;
+                    pricingMap[`${item.roomCategory}-${item.rateType}`] = item.finalGovernedRate_pernight_ex-VAT;
                 });
 
                 const priceElements = {
