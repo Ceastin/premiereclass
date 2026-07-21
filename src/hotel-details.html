@@ -902,7 +902,7 @@
                         { variableName: 'corporate', value: simCorporate },
                         { variableName: 'weatherCondition', value: simWeather },
                         { variableName: 'eventType', value: simEvent },
-                        { variableName: 'hotelLocation', value: loc }
+                        { variableName: 'hotelLocation', value: "UK" }
                     ];
 
                     // Only attach occupancy if the user provided a value
@@ -926,7 +926,6 @@
             const initialFields = [
                 { variableName: 'hotel_name', value: hotelId },
                 { variableName: 'corporate', value: false },
-                { variableName: 'hotelLocation', value: loc },
             ];
 
             fetchPricingData(initialFields).then(data => {
